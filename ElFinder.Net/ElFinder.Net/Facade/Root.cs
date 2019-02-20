@@ -248,10 +248,14 @@ namespace ElFinder
             {
                 if (!input.Exists)
                     throw new ArgumentException("File not exist");
-                using (Image image = Image.FromFile(input.FullName))
+                try 
                 {
-                    return new Size(image.Width, image.Height);
-                }
+                    using (Image image = Image.FromFile(input.FullName))
+                    {
+                        return new Size(image.Width, image.Height);
+                    }
+                } catch {}
+                return new Size(0,0);
             }
 
             internal bool CanCreateThumbnail(FileInfo input)
